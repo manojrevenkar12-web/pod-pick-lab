@@ -1,0 +1,41 @@
+# The simulated world. Only podpick.sim and podpick.evaluate read this file: the pick cell
+# never sees item poses, masses, friction or seal physics, only what its sensors report.
+
+timestep: 0.002
+bin:                     # one fabric-pod bin, metres, interior
+  width: 0.30            # x in [-w/2, w/2]
+  depth: 0.30            # y in [0, depth]; the open front is y = 0, the robot is at y < 0
+  height: 0.22           # z in [0, height]
+  wall: 0.01
+  lip_height: 0.008      # sewn lip at the front of the floor
+  wall_friction: 0.45
+  wall_solref: [0.03, 1.0]   # soft: fabric walls give a little
+band:
+  radius: 0.004
+  stiffness: 250.0       # N/m, how hard the elastic pushes back when an item leans on it
+  damping: 4.0
+  pass_through: 0.45     # share of camera rays that see through the band mesh
+  open_z: 0.006          # the band arm holds the band down here during a pick
+materials:
+  box:  {friction: [0.45, 0.6], seal: [0.9, 1.0],  solref: [0.004, 1.0], density: [150, 450]}
+  bag:  {friction: [0.3, 0.45], seal: [0.35, 0.8], solref: [0.02, 1.0],  density: [80, 250]}
+  book: {friction: [0.35, 0.5], seal: [0.8, 0.95], solref: [0.004, 1.0], density: [500, 800]}
+suction:
+  cup_radius: 0.015
+  max_force: 55.0        # N at a perfect seal
+  weld_solref: [0.012, 1.0]   # compliance of the bellows (a soft weld between tool and item)
+  torquescale: 0.3
+  peel_time: 0.03        # s over capacity before the seal lets go
+  peel_lever: 0.022      # m: peel moment = force capacity x lever
+  min_seal: 0.22         # below this quality no vacuum builds
+  max_angle_deg: 38.0    # seal quality falls to 0 at this angle between cup and face
+  edge_margin: 0.004     # m; the cup leaks when its rim crosses a face edge
+  pressure_noise: 0.02
+depth_noise:
+  sigma_at_1m: 0.004     # sigma grows with depth squared
+  dropout: 0.01
+intensity_noise: 0.03
+outcome:
+  out_y: -0.04           # an item whose centre is in front of this plane has left the bin
+  disturbed_m: 0.03
+  settle_after_s: 0.5

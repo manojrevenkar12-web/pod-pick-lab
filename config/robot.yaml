@@ -1,0 +1,29 @@
+# What the pick cell knows about itself: camera calibration, tool geometry, motion limits.
+# Shared by the simulator (which renders through this camera) and the pick cell.
+
+camera:                  # tower camera in front of the bin, looking into it (+y)
+  position: [0.0, -0.42, 0.12]
+  hfov_deg: 46.0
+  scene: [128, 96]       # width, height of the image taken before a pick
+  monitor: [64, 48]      # low-resolution frames during extraction
+  monitor_hz: 10
+  max_range: 1.2
+bin_frame:               # the bin interior in the robot's frame (known from the pod's fiducials)
+  width: 0.30
+  depth: 0.30
+  height: 0.22
+tool:
+  cup_radius: 0.015
+  cup_length: 0.03
+  link_radius: 0.018
+  link_length: 0.30
+motion:
+  approach_speed: 0.25   # m/s
+  accel: 2.5             # m/s^2
+  standoff: 0.04
+  overtravel: 0.012      # how far past the measured surface the cup may go looking for contact
+  retreat: 0.02
+  pull_speed: 0.45
+  slow_factor: 0.35
+  exit_y: -0.25          # extraction ends when the cup reaches this plane
+  max_lift: 0.04

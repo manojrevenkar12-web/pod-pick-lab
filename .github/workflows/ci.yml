@@ -1,0 +1,114 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: python (lint, tests, C++ parity, release gate)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: '3.12', cache: pip }
+      - name: Install (CPU PyTorch)
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[train,service,dev]"
+      - run: ruff check src tests scripts
+      - run: ruff format --check src tests scripts
+      - name: Tests (simulator, candidates, planner, monitor and its C++ twin, isolation, service)
+        run: pytest -m "not slow"
+      - name: Release gate on the committed full run
+        run: podpick gate
+
+  cpp:
+    name: C++ monitor (CMake, -Werror, unit tests)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - run: cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build cpp/build -j2
+      - run: ctest --test-dir cpp/build --output-on-failure
+      - name: Sanitizers
+        run: |
+          g++ -std=c++17 -O1 -g -ffp-contract=off -fsanitize=address,undefined -fno-omit-frame-pointer \
+            cpp/test_monitor.cpp cpp/monitor.cpp -o test_asan
+          ./test_asan
+
+  pipeline:
+    name: pipeline end to end (quick profile)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: '3.12', cache: pip }
+      - run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[train,service,dev]"
+      - run: pytest -m slow
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: quick-run, path: 'runs/quick/*.json' }
+
+  image:
+    name: planner image on kind (plan and monitor through the cluster)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/setup-buildx-action@v3
+      - name: Build the planner image
+        uses: docker/build-push-action@v6
+        with: { context: ., file: deploy/Dockerfile, tags: 'podpick-planner:ci', load: true, cache-from: type=gha, cache-to: 'type=gha,mode=max' }
+      - uses: helm/kind-action@v1
+        with: { cluster_name: podpick }
+      - name: Deploy
+        run: |
+          kind load docker-image podpick-planner:ci --name podpick
+          kubectl apply -k deploy/k8s/overlays/kind
+          kubectl -n podpick rollout status deployment/planner --timeout=300s
+      - uses: actions/setup-python@v6
+        with: { python-version: '3.12', cache: pip }
+      - name: Plans from the cluster equal plans made locally
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[service]"
+          kubectl -n podpick port-forward svc/planner 8080:80 > pf.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:8080/readyz && break; sleep 1; done
+          python scripts/smoke.py http://localhost:8080
+      - name: Diagnostics
+        if: failure()
+        run: |
+          kubectl -n podpick get all
+          kubectl -n podpick describe pods | tail -60
+          kubectl -n podpick logs deployment/planner --tail=80 || true
+
+  web:
+    name: dashboard (lint, types, unit, build, browser + axe)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run: { working-directory: web }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e

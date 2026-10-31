@@ -1,0 +1,32 @@
+# Scene families: how bins are filled. Read by the simulator only.
+# Sizes are full edge lengths in metres; the order picked is a uniformly random item that is
+# at least partly visible from the camera.
+
+families:
+  mixed:                 # the training distribution
+    items: [5, 9]
+    mix: {box: 0.55, bag: 0.25, book: 0.20}
+    box_size: {x: [0.05, 0.14], y: [0.05, 0.14], z: [0.03, 0.10]}
+    bag_size: {x: [0.07, 0.15], y: [0.06, 0.14], z: [0.02, 0.05]}
+    book_size: {x: [0.02, 0.04], y: [0.13, 0.20], z: [0.15, 0.20]}
+    yaw_deg: 12
+    front_bias: 0.5      # 0: depth placement uniform, 1: items pushed to the front
+    drop_gap: 0.004
+  dense:                 # fuller bins, more stacking
+    items: [9, 13]
+    mix: {box: 0.55, bag: 0.25, book: 0.20}
+    box_size: {x: [0.05, 0.12], y: [0.05, 0.12], z: [0.03, 0.08]}
+    bag_size: {x: [0.07, 0.13], y: [0.06, 0.12], z: [0.02, 0.05]}
+    book_size: {x: [0.02, 0.04], y: [0.13, 0.20], z: [0.15, 0.20]}
+    yaw_deg: 12
+    front_bias: 0.6
+    drop_gap: 0.004
+  soft:                  # mostly polybags: poor seals, items that ride on each other
+    items: [5, 9]
+    mix: {box: 0.2, bag: 0.7, book: 0.1}
+    box_size: {x: [0.05, 0.14], y: [0.05, 0.14], z: [0.03, 0.10]}
+    bag_size: {x: [0.07, 0.16], y: [0.06, 0.15], z: [0.02, 0.06]}
+    book_size: {x: [0.02, 0.04], y: [0.13, 0.20], z: [0.15, 0.20]}
+    yaw_deg: 18
+    front_bias: 0.5
+    drop_gap: 0.004

@@ -1,0 +1,7 @@
+.git
+runs
+web/node_modules
+web/dist
+cpp/build
+**/__pycache__
+*.egg-info

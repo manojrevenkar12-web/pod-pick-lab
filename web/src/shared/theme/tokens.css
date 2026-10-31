@@ -1,0 +1,91 @@
+/*
+ * Tokens. A lab notebook for a pick cell: a cool fibreboard-grey ground, white plates for the
+ * evidence, ink in deep blue-black. Two hues carry the experiment through every chart: slate for
+ * the heuristic scorer, amber (the colour of a storage pod's fabric) for the learned one. A solid
+ * mark means the extraction monitor was on; a hollow one means it was off. Red is reserved for an
+ * item that left the bin uninvited.
+ */
+@import '@fontsource/bricolage-grotesque/500.css';
+@import '@fontsource/bricolage-grotesque/700.css';
+@import '@fontsource/bricolage-grotesque/800.css';
+@import '@fontsource/public-sans/400.css';
+@import '@fontsource/public-sans/600.css';
+
+:root {
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Public Sans', system-ui, sans-serif;
+
+  --ground: #e9edf0;
+  --plate: #ffffff;
+  --sunken: #dfe5ea;
+  --ink: #14202b;
+  --ink-soft: #4a5866;
+  --rule: #c3ccd4;
+  --focus: #1b5fd0;
+
+  --heuristic: #3e5f7d;
+  --learned: #a3610a;
+  --learned-fill: #e7a33a;
+  --collateral: #b42318;
+  --picked: #1f6b4a;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 40px;
+  --space-7: 72px;
+
+  --radius-s: 2px;
+  --radius-m: 6px;
+  --radius-l: 14px;
+
+  --text-xs: 0.75rem;
+  --text-s: 0.875rem;
+  --text-m: 1rem;
+  --text-l: 1.375rem;
+  --text-xl: clamp(2.4rem, 6vw, 4.25rem);
+
+  --measure: 66ch;
+  --page: 1180px;
+  --tap: 44px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0f151b;
+    --plate: #17202a;
+    --sunken: #0b1015;
+    --ink: #e6ecf1;
+    --ink-soft: #a3b1bd;
+    --rule: #2c3945;
+    --focus: #8fb6ff;
+    --heuristic: #8fb1d0;
+    --learned: #f0b45a;
+    --learned-fill: #c9862a;
+    --collateral: #ff7b6e;
+    --picked: #6fcf9f;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--font-body); font-size: var(--text-m); line-height: 1.55; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.04; margin: 0; }
+h1 { font-weight: 800; font-size: var(--text-xl); letter-spacing: -0.02em; }
+h2 { font-weight: 700; font-size: var(--text-l); letter-spacing: -0.01em; }
+h3 { font-weight: 700; font-size: var(--text-m); }
+p { margin: 0; }
+button, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-s); }
+.num { font-variant-numeric: tabular-nums; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+.skeleton { background: linear-gradient(90deg, var(--sunken) 30%, var(--plate) 50%, var(--sunken) 70%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; border-radius: var(--radius-m); }
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

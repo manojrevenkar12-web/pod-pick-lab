@@ -1,0 +1,20 @@
+family:
+  items: [8, 12]
+  mix: {box: 0.25, bag: 0.10, book: 0.65}
+  box_size: {x: [0.04, 0.14], y: [0.03, 0.12], z: [0.02, 0.06]}
+  bag_size: {x: [0.08, 0.16], y: [0.06, 0.14], z: [0.02, 0.04]}
+  book_size: {x: [0.02, 0.05], y: [0.12, 0.21], z: [0.15, 0.20]}
+  yaw_deg: 12
+  front_bias: 0.7
+  drop_gap: 0.004
+notes: >
+  A media-and-slim-goods bin of the kind a fulfilment centre fills during the back-to-school or
+  holiday book rush: mostly paperbacks and hardbacks, many standing upright with their thin spine
+  side to the front, mixed with small flat boxes (games, DVDs, stationery packs) and the odd thin
+  polybag (a calendar or a T-shirt). It differs from a generic mixed bin in four ways: books dominate
+  the mix instead of being a minority, the bin holds more items (8 to 12), the boxes are small and
+  flat rather than full-size, and items crowd the front of the bin where the stower pushed them.
+  Tall upright books often stand above the elastic band and present only a narrow spine or a top
+  edge, so the robot has to find the flat faces of the boxes and the lying books or pick a book from
+  its top, but there are always several cardboard surfaces in reach and nothing is larger than the
+  bin allows, so a competent picker should succeed on a good share of these bins.

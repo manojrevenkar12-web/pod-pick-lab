@@ -1,0 +1,19 @@
+# The release gate. `floors` must hold or the run fails; `targets` are what we are aiming for and
+# are reported, met or not. Neither is lowered to make a run pass (AGENTS.md).
+
+floors:
+  - {name: perception mask IoU (validation), path: perception.mask_iou_mean, op: ">=", value: 0.60}
+  - {name: occlusion class accuracy (validation), path: perception.occlusion_accuracy, op: ">=", value: 0.60}
+  - {name: risk model success AUC (validation), path: risk.final.success.auc, op: ">=", value: 0.75}
+  - {name: risk model collateral AUC (validation), path: risk.final.collateral.auc, op: ">=", value: 0.70}
+  - {name: C++ monitor signal equals reference, path: native.signal_equal, op: "==", value: 1.0}
+  - {name: C++ monitor action equals reference, path: native.action_equal, op: "==", value: 1.0}
+  - {name: C++ monitor median latency (us), path: native.native_us_median, op: "<=", value: 1000}
+  - {name: "mixed: learned-closed no more collateral than heuristic-open (upper 95%)", path: evaluation.mixed.analysis.vs_heuristic_open.learned-closed.collateral.hi, op: "<=", value: 0.02}
+  - {name: "mixed: learned-closed costs less per order than heuristic-open (upper 95%)", path: evaluation.mixed.analysis.vs_heuristic_open.learned-closed.cost.hi, op: "<", value: 0.0}
+targets:
+  - {name: "mixed: learned-closed pick rate", path: evaluation.mixed.analysis.policies.learned-closed.pick_rate, op: ">=", value: 0.60}
+  - {name: "mixed: learned-closed collateral per 100 orders", path: evaluation.mixed.analysis.policies.learned-closed.collateral_per_100, op: "<=", value: 1.0}
+  - {name: "dense: learned-closed collateral per 100 orders", path: evaluation.dense.analysis.policies.learned-closed.collateral_per_100, op: "<=", value: 2.0}
+  - {name: "soft: learned-closed pick rate", path: evaluation.soft.analysis.policies.learned-closed.pick_rate, op: ">=", value: 0.40}
+  - {name: perception mask IoU (validation), path: perception.mask_iou_mean, op: ">=", value: 0.80}

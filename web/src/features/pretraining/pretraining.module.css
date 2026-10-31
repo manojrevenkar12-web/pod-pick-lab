@@ -1,0 +1,19 @@
+.fig { margin: 0; display: grid; gap: var(--space-2); min-width: 0; }
+.fig svg { width: 100%; height: auto; display: block; overflow: visible; }
+.title { font-weight: 600; font-size: var(--text-s); }
+.none { color: var(--ink-soft); }
+.grid { stroke: var(--sunken); }
+.tick { fill: var(--ink-soft); font-size: 12px; font-variant-numeric: tabular-nums; }
+.line { fill: none; stroke-width: 2.5; }
+.range { stroke-width: 2; opacity: 0.45; }
+.pre .line, .pre .range { stroke: var(--learned); }
+.pre .dot { fill: var(--learned); }
+.scratch .line, .scratch .range { stroke: var(--heuristic); stroke-dasharray: 6 4; }
+.scratch .range { stroke-dasharray: none; }
+.scratch .dot { fill: var(--plate); stroke: var(--heuristic); stroke-width: 2.5; }
+.legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-size: var(--text-s); color: var(--ink-soft); }
+.keyPre::before, .keyScratch::before { content: ''; display: inline-block; width: 18px; height: 3px; margin-right: var(--space-2); vertical-align: middle; }
+.keyPre { color: var(--ink); }
+.keyPre::before { background: var(--learned); }
+.keyScratch { color: var(--ink); }
+.keyScratch::before { background: repeating-linear-gradient(90deg, var(--heuristic) 0 6px, transparent 6px 10px); }

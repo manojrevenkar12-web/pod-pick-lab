@@ -1,0 +1,13 @@
+.facts { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); }
+.facts div { display: grid; gap: var(--space-1); }
+.facts dt { color: var(--ink-soft); font-size: var(--text-s); }
+.facts dd { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: var(--text-l); }
+.gate { display: grid; gap: var(--space-5); }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-1); font-size: var(--text-s); }
+.checks li { display: grid; grid-template-columns: 7ch 1fr auto; gap: var(--space-3); align-items: baseline; padding: var(--space-2) 0; border-bottom: 1px solid var(--sunken); }
+.mark { font-weight: 700; }
+.pass .mark, .met .mark { color: var(--picked); }
+.fail .mark { color: var(--collateral); }
+.missed .mark { color: var(--learned); }
+.actual { color: var(--ink-soft); white-space: nowrap; }
+@media (max-width: 560px) { .checks li { grid-template-columns: 7ch 1fr; } .actual { grid-column: 2; } }

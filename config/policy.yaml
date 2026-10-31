@@ -1,0 +1,68 @@
+# The pick cell: perception, candidate generation, scoring, the extraction monitor and the
+# pick-or-hand-over decision. Thresholds are chosen on the dev scenes (docs/adr/0004).
+
+perception:
+  mask_threshold: 0.5
+  min_mask_pixels: 25
+  query_scale: {dims: 0.2, mass: 1.0}
+
+candidates:
+  max: 16
+  stride: 3                 # pixel grid before farthest-point sampling
+  max_angle_deg: 55         # only faces that look toward the front can be reached
+  patch: 2                  # half-width of the normal / planarity patch, pixels
+  corridor_margin: 0.004    # m, added to the tool radius for the extraction corridor
+  ring_px: 3                # pixels around the mask that describe the neighbours
+  touch_m: 0.015            # a neighbour within this depth of the target surface is touching it
+  crop: 32                  # pixels, square crop around a candidate for the risk model
+
+primitives:                 # how the target leaves the bin once sealed
+  straight: {lift: 0.0, speed: 1.0}
+  lift: {lift: 0.025, speed: 1.0}
+  gentle: {lift: 0.012, speed: 0.45}
+
+heuristic:                  # the free-space ranking described for Vulcan Pick
+  eligible_classes: [0]     # 0 unobstructed, 1 below others, 2 blocked
+  w_edge: 0.5
+  w_angle: 0.0004           # per degree
+  primitive: lift
+
+monitor:
+  move_m: 0.012             # a neighbour pixel that comes this much closer to the camera has moved
+  dilate_px: 2
+  warn_px: 6
+  abort_px: 14              # default for monitor sessions; the pick cells override it per policy
+  abort_ticks: 2            # ticks at or above abort_px before aborting
+  pressure_slow: 0.30
+  pressure_abort: 0.16
+  inside_y: -0.02           # pressure aborts only while the item is still over the bin floor
+  extrude_steps: 6
+  sag_m: 0.03                # the held item may hang this much lower than the tool says
+  sag_steps: 3
+  follow: 0.5               # a neighbour counts once it keeps pace with half the tool's travel
+  refine_step_m: 0.01       # grow the target mask over depth steps smaller than this (0: off)
+
+decision:                   # human-equivalent seconds
+  robot_second: 0.25        # a second of robot time, in human seconds
+  human_pick_s: 9.0         # a person picks the item instead
+  collateral_s: 75.0        # a neighbour on the floor: find, restow, check for damage
+  drop_s: 40.0              # the target dropped outside the bin
+  abort_s: 3.0              # an aborted pick, put back, before the hand-over
+  max_attempts: 2
+  seal_ok: 0.24             # vacuum reading that counts as sealed
+  attempt_s: 4.5            # robot seconds per attempt: about 2.3 s simulated on dev orders + overhead_s, rounded up
+  overhead_s: 2.0           # per attempted order: to the tote and back (not simulated)
+
+risk:
+  epochs: 10
+  batch: 64
+  lr: 0.002
+  min_steps: 400
+  pretrain_epochs: 10
+  mask_ratio: 0.6
+
+policies:                   # abort_px per closed-loop policy from `podpick tune` on validation orders (docs/adr/0004)
+  heuristic-open: {scorer: heuristic, monitor: false}
+  heuristic-closed: {scorer: heuristic, monitor: true, abort_px: 48}
+  learned-open: {scorer: learned, monitor: false}
+  learned-closed: {scorer: learned, monitor: true, abort_px: 96}

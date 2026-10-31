@@ -1,0 +1,17 @@
+.scene { margin: 0; display: grid; gap: var(--space-3); background: var(--plate); border: 1px solid var(--rule); border-radius: var(--radius-l); padding: var(--space-4); }
+.scene svg { width: 100%; height: auto; display: block; overflow: visible; }
+.bin { stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+.lip { fill: var(--ink); }
+.band { fill: none; stroke: var(--ink-soft); stroke-width: 2; }
+.item { fill: var(--sunken); stroke: var(--rule); }
+.target { fill: var(--learned-fill); stroke: var(--learned); stroke-width: 1.5; }
+.rider { fill: var(--plate); stroke: var(--collateral); stroke-width: 2; stroke-dasharray: 5 3; }
+.arm { fill: var(--ink-soft); }
+.cup { fill: var(--plate); stroke: var(--ink); stroke-width: 2; }
+.bar { fill: var(--heuristic); }
+.barHot { fill: var(--collateral); }
+.threshold { stroke: var(--collateral); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.abortText { fill: var(--collateral); font-family: var(--font-display); font-weight: 700; font-size: 14px; }
+.caption { display: flex; gap: var(--space-4); align-items: flex-start; justify-content: space-between; color: var(--ink-soft); font-size: var(--text-s); }
+.replay { flex: none; min-height: var(--tap); padding: 0 var(--space-4); border-radius: 999px; border: 1px solid var(--rule); background: var(--plate); font-weight: 600; cursor: pointer; }
+.replay:disabled { opacity: 0.5; cursor: default; }

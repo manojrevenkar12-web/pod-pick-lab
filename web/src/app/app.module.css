@@ -1,0 +1,17 @@
+.page { max-width: var(--page); margin: 0 auto; padding: var(--space-6) var(--space-4) var(--space-7); display: grid; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: var(--space-6); align-items: center; padding-bottom: var(--space-6); }
+.heroText { display: grid; gap: var(--space-4); }
+.heroLede { font-size: 1.125rem; color: var(--ink-soft); max-width: 52ch; }
+.switcher { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); padding: var(--space-3) 0; background: var(--ground); border-bottom: 1px solid var(--rule); }
+.switcherNote { color: var(--ink-soft); font-size: var(--text-s); }
+.loading { display: grid; gap: var(--space-4); }
+.twoUp { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4); }
+.facts { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); }
+.facts div { display: grid; gap: var(--space-1); }
+.facts dt { color: var(--ink-soft); font-size: var(--text-s); }
+.facts dd { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: var(--text-l); }
+.footer { margin-top: var(--space-7); padding-top: var(--space-4); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: var(--text-s); max-width: var(--measure); }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; gap: var(--space-5); }
+  .page { padding-top: var(--space-5); }
+}

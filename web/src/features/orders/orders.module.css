@@ -1,0 +1,14 @@
+.wrap { display: grid; gap: var(--space-4); }
+.bar { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; justify-content: space-between; }
+.count { color: var(--ink-soft); font-size: var(--text-s); }
+.list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-3); }
+.order { background: var(--plate); border: 1px solid var(--rule); border-radius: var(--radius-m); padding: var(--space-3) var(--space-4); display: grid; gap: var(--space-2); }
+.head { display: flex; justify-content: space-between; gap: var(--space-2); font-size: var(--text-s); }
+.seed { font-weight: 600; }
+.meta { color: var(--ink-soft); text-align: right; }
+.outcomes { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: var(--text-s); }
+.outcomes li { display: flex; align-items: center; gap: var(--space-2); }
+.good { color: var(--picked); }
+.bad { color: var(--collateral); font-weight: 600; }
+.plain { color: var(--ink-soft); }
+.more { justify-self: center; min-height: var(--tap); padding: 0 var(--space-5); border-radius: 999px; border: 1px solid var(--rule); background: var(--plate); font-weight: 600; cursor: pointer; }

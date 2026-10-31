@@ -1,0 +1,34 @@
+# Seeds, sizes and test sets. Seed ranges never overlap between training, validation and test.
+profiles:
+  full:
+    perception_scenes: 1600       # training scenes for perception (several targets each)
+    perception_val_scenes: 300
+    pick_orders: 2400             # orders (scene, target) executed to label pick outcomes
+    attempts_per_order: 3         # counterfactual attempts per order, from the same start state
+    unlabelled_scenes: 2000       # images used only for self-supervised pretraining
+    test_orders: 250              # per test family
+    label_budgets: [600, 2400, 7200]
+    seeds: [0, 1, 2]
+    perception_epochs: 16
+  quick:
+    perception_scenes: 120
+    perception_val_scenes: 30
+    pick_orders: 160
+    attempts_per_order: 2
+    unlabelled_scenes: 100
+    test_orders: 24
+    label_budgets: [160, 320]
+    seeds: [0]
+    perception_epochs: 2
+seed_base:                         # scene seeds start here for each split
+  perception_train: 0
+  perception_val: 500000
+  picks: 1000000
+  picks_val: 1500000
+  unlabelled: 2000000
+  test: 3000000
+train_family: mixed
+test_families: [mixed, dense, soft]
+heldout_families: [heldout]
+max_targets_per_scene: 5
+workers: 2

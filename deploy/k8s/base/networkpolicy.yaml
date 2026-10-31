@@ -1,0 +1,11 @@
+# The planner talks to nobody: ingress on its port only, no egress at all.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: planner
+spec:
+  podSelector: {matchLabels: {app: planner}}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - ports: [{port: 8080, protocol: TCP}]
+  egress: []
