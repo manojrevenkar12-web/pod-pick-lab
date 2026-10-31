@@ -1,5 +1,5 @@
 .policy { display: flex; align-items: center; gap: var(--space-2); white-space: nowrap; color: var(--ink) !important; }
-.cell { display: grid; grid-template-columns: 4.5ch minmax(64px, 1fr); align-items: center; gap: var(--space-2); min-width: 150px; }
+.cell { display: grid; grid-template-columns: 6.5ch minmax(64px, 1fr); align-items: center; gap: var(--space-2); min-width: 150px; }
 .value { text-align: right; }
 .track { display: block; height: 10px; background: var(--sunken); border-radius: 999px; overflow: hidden; }
 .good, .bad, .plain { display: block; height: 100%; border-radius: 999px; }

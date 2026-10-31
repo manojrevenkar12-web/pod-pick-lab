@@ -24,7 +24,57 @@ Bins are simulated in MuJoCo with real contact (friction, stacking, a sewn lip, 
 suction cup that peels under load) and a ray-cast camera ([ADR 1](docs/adr/0001-simulated-bins.md)),
 so every pick's outcome is known exactly and every policy can be run on the same orders.
 
-RESULTS_PLACEHOLDER
+![Dashboard: four pick cells on the same orders, and the monitor stopping a pick when the item on top starts to ride out](docs/screenshots/01-overview.png)
+
+## What it measured
+
+All numbers come from the committed run (`reports/results.json`; the full tables are in
+[`docs/REPORT.md`](docs/REPORT.md)). Four pick cells pick the **same 250 orders** per family, from the
+same start state, with the same sensor noise; differences are paired, with 95% bootstrap intervals.
+"Cost" is human-equivalent seconds per order: robot time, a person picking what the robot did not,
+75 s for every neighbour on the floor, 40 s for a dropped target (`config/policy.yaml`).
+
+| Mixed bins (250 orders) | Picked | Success when attempted | Neighbours out / 100 orders | Cost / order |
+|---|---:|---:|---:|---:|
+| Free-space ranking, monitor off (the baseline) | 15.2% | 33.9% | 3.2 | 10.9 s |
+| Free-space ranking, monitor on | 12.8% | 28.6% | 3.2 | 11.5 s |
+| Learned risk, monitor off | 14.0% | 72.9% | 1.2 | 8.9 s |
+| **Learned risk, monitor on** | **13.2%** | **68.8%** | **0.8** | **8.8 s** |
+
+- **The learned risk model is what pays.** Against the baseline it brings out 2.4 fewer neighbours
+  per 100 orders (95% interval −5.2 to −0.4) and saves 2.1 s per order (−4.5 to −0.2), with no
+  detectable change in the share of orders picked (−2.0 points, −6.0 to +1.6). It does it by trying less (19% of orders against 45%) and succeeding more
+  (69–73% against 34%). In dense bins the saving is larger: 4.0 fewer neighbours per 100 and 3.7 s
+  per order.
+- **The monitor helps little, and on the ranking it hurts.** On the learned cell it removes 0.4
+  more neighbours per 100 (−1.2 to 0.0). On the ranking it aborts 12% of orders, mostly on falling
+  vacuum (25 of 31 aborts), and puts back picks that would have succeeded: 2.4 points fewer picked,
+  no fewer neighbours out. The vacuum rule is too eager; the neighbour rule is not the problem.
+- **Mostly polybags: no gain.** Seals are poor and the learned cell is no better than the ranking there.
+- **The blind held-out family** (book-heavy bins written from a one-page brief, run once): the learned
+  cells cost less (−2.0 s per order, −4.5 to −0.1) and bring out fewer neighbours (0.8–1.2 against
+  2.8 per 100, an interval that touches zero), and become very cautious: they attempt 10% of orders, at 75–88% success.
+- **Its promises are mostly honest.** For its first choices the model predicted 71% success and
+  72.9% happened; it predicted 2.7% collateral and 6.2% happened: it underestimates collateral.
+- **Pretraining without labels did not help** at these sizes: masked reconstruction on 28,000 crops
+  gave the same AUC as training from scratch at 600, 2,400 and 6,948 labelled attempts (success AUC
+  0.91, collateral AUC 0.78–0.80 at the full budget). The finding Amazon reported for multi-suction
+  picking does not carry over to this simulator and this model size.
+- **The C++ monitor equals its Python reference** on all 545 frames of real extractions (signal and
+  action), at a median of 125 µs per 64 × 48 frame through the Python binding (305 µs p99) against
+  318 µs for the reference. At 10 Hz that is about 0.1% of the tick.
+
+### What is weak
+
+- **The robot picks only one order in seven.** Every policy hands most orders to a person. Two
+  reasons: half the targets have something resting on them or are mostly hidden, and the cost model
+  values a robot pick at only the 9 s a person needs, against 75 s for a neighbour on the floor, so
+  the learned cell attempts only when it is confident. The pick-rate targets in the release gate
+  (60% on mixed bins, 40% on polybags) are missed and reported as missed.
+- **Perception.** Mask IoU 0.69 on validation bins; about a third of wrong-item touches in development
+  came from masks bleeding into neighbours ([ADR 7](docs/adr/0007-first-test-run.md)).
+- **Abort thresholds rest on few examples**: 68 and 86 sealed validation attempts, with 4 and 3
+  collateral events ([ADR 4](docs/adr/0004-monitor-thresholds.md)).
 
 ## How it is built
 
@@ -82,7 +132,7 @@ and Playwright with axe on desktop and phone.
   items. The rates are rates in this simulator. What carries over is the method: paired
   counterfactual evaluation, risk labels from random attempts, thresholds chosen on validation
   logs, and a real-time monitor proven equal to its reference.
-- **Perception is the weakest part.** LIMIT_PERCEPTION
+- **Perception is the weakest part** (mask IoU 0.69), and with it the pick rate (see above).
 - **The test families were seen once before the final run** (aggregate only); see
   [ADR 7](docs/adr/0007-first-test-run.md). The held-out family was not.
 - **CPU only.** Models are small; nothing here was trained on a GPU.

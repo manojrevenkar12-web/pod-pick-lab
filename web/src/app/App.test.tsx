@@ -22,7 +22,10 @@ afterEach(() => {
 
 describe('App', () => {
   it('shows a skeleton while loading', () => {
-    vi.stubGlobal('fetch', vi.fn(() => new Promise(() => {})));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => new Promise(() => {})),
+    );
     render(<App />);
     expect(screen.getByRole('status', { name: 'Loading results' })).toBeTruthy();
   });
@@ -51,7 +54,15 @@ describe('App', () => {
   it('renders every section from the results and switches the set of bins', async () => {
     respond({ 'results.json': { status: 200, body: fixture }, 'orders.json': { status: 200, body: orders } });
     render(<App />);
-    for (const name of ['Four pick cells, the same orders', 'Who gets attempted', 'Labels or pretraining', 'Finding the ordered item', 'The monitor, in C++', 'Every order', 'Release gate']) {
+    for (const name of [
+      'Four pick cells, the same orders',
+      'Who gets attempted',
+      'Labels or pretraining',
+      'Finding the ordered item',
+      'The monitor, in C++',
+      'Every order',
+      'Release gate',
+    ]) {
       await screen.findByRole('heading', { level: 2, name });
     }
     const dense = screen.getByRole('button', { name: 'Dense bins' });

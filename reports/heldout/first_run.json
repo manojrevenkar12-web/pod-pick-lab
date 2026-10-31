@@ -1,0 +1,399 @@
+{
+ "recorded_at": "2026-10-31T12:06:25+0100",
+ "spec_sha256": "99f9c823b5471be0b3bec91aedfa0d74fa6d84183d4e1bfe343c28196e014faa",
+ "orders": 250,
+ "analysis": {
+  "policies": {
+   "heuristic-open": {
+    "orders": 250,
+    "pick_rate": 0.104,
+    "attempt_rate": 0.528,
+    "success_when_attempted": 0.19696969696969696,
+    "collateral_per_100": 2.8000000000000003,
+    "orders_with_collateral": 0.024,
+    "drop_rate": 0.012,
+    "wrong_item_rate": 0.012,
+    "abort_rate": 0.0,
+    "handoff_rate": 0.896,
+    "robot_s_per_order": 1.872999999999911,
+    "uph": 127.82519631273861,
+    "cost_per_order": 11.112249999999978
+   },
+   "heuristic-closed": {
+    "orders": 250,
+    "pick_rate": 0.092,
+    "attempt_rate": 0.528,
+    "success_when_attempted": 0.17424242424242425,
+    "collateral_per_100": 2.0,
+    "orders_with_collateral": 0.016,
+    "drop_rate": 0.008,
+    "wrong_item_rate": 0.012,
+    "abort_rate": 0.236,
+    "handoff_rate": 0.908,
+    "robot_s_per_order": 1.9691999999999001,
+    "uph": 109.48036493455339,
+    "cost_per_order": 11.192299999999976
+   },
+   "learned-open": {
+    "orders": 250,
+    "pick_rate": 0.084,
+    "attempt_rate": 0.096,
+    "success_when_attempted": 0.875,
+    "collateral_per_100": 1.2,
+    "orders_with_collateral": 0.012,
+    "drop_rate": 0.0,
+    "wrong_item_rate": 0.0,
+    "abort_rate": 0.0,
+    "handoff_rate": 0.916,
+    "robot_s_per_order": 0.3039999999999878,
+    "uph": 609.6774193548537,
+    "cost_per_order": 9.219999999999997
+   },
+   "learned-closed": {
+    "orders": 250,
+    "pick_rate": 0.072,
+    "attempt_rate": 0.096,
+    "success_when_attempted": 0.75,
+    "collateral_per_100": 0.8,
+    "orders_with_collateral": 0.008,
+    "drop_rate": 0.0,
+    "wrong_item_rate": 0.0,
+    "abort_rate": 0.012,
+    "handoff_rate": 0.928,
+    "robot_s_per_order": 0.3141999999999867,
+    "uph": 512.0505728961019,
+    "cost_per_order": 9.066549999999996
+   }
+  },
+  "by_occlusion": {
+   "heuristic-open": {
+    "unobstructed": {
+     "orders": 142,
+     "pick_rate": 0.1619718309859155,
+     "attempt_rate": 0.795774647887324,
+     "success_when_attempted": 0.20353982300884957,
+     "collateral_per_100": 4.225352112676056,
+     "orders_with_collateral": 0.035211267605633804,
+     "drop_rate": 0.014084507042253521,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.0,
+     "handoff_rate": 0.8380281690140845,
+     "robot_s_per_order": 2.8373239436618354,
+     "uph": 131.658451264116,
+     "cost_per_order": 11.983978873239405
+    },
+    "below_others": {
+     "orders": 83,
+     "pick_rate": 0.03614457831325301,
+     "attempt_rate": 0.1927710843373494,
+     "success_when_attempted": 0.1875,
+     "collateral_per_100": 0.0,
+     "orders_with_collateral": 0.0,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.024096385542168676,
+     "abort_rate": 0.0,
+     "handoff_rate": 0.963855421686747,
+     "robot_s_per_order": 0.6379518072288881,
+     "uph": 127.13360800471209,
+     "cost_per_order": 8.834186746987944
+    },
+    "blocked": {
+     "orders": 25,
+     "pick_rate": 0.0,
+     "attempt_rate": 0.12,
+     "success_when_attempted": 0.0,
+     "collateral_per_100": 4.0,
+     "orders_with_collateral": 0.04,
+     "drop_rate": 0.04,
+     "wrong_item_rate": 0.04,
+     "abort_rate": 0.0,
+     "handoff_rate": 1.0,
+     "robot_s_per_order": 0.49599999999997196,
+     "uph": 0.0,
+     "cost_per_order": 13.723999999999991
+    }
+   },
+   "heuristic-closed": {
+    "unobstructed": {
+     "orders": 142,
+     "pick_rate": 0.14788732394366197,
+     "attempt_rate": 0.795774647887324,
+     "success_when_attempted": 0.18584070796460178,
+     "collateral_per_100": 3.5211267605633805,
+     "orders_with_collateral": 0.028169014084507043,
+     "drop_rate": 0.014084507042253521,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.33098591549295775,
+     "handoff_rate": 0.852112676056338,
+     "robot_s_per_order": 2.965845070422385,
+     "uph": 116.81990265008497,
+     "cost_per_order": 12.607658450704188
+    },
+    "below_others": {
+     "orders": 83,
+     "pick_rate": 0.024096385542168676,
+     "attempt_rate": 0.1927710843373494,
+     "success_when_attempted": 0.125,
+     "collateral_per_100": 0.0,
+     "orders_with_collateral": 0.0,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.024096385542168676,
+     "abort_rate": 0.12048192771084337,
+     "handoff_rate": 0.9759036144578314,
+     "robot_s_per_order": 0.6909638554216534,
+     "uph": 80.58198097370143,
+     "cost_per_order": 9.317319277108425
+    },
+    "blocked": {
+     "orders": 25,
+     "pick_rate": 0.0,
+     "attempt_rate": 0.12,
+     "success_when_attempted": 0.0,
+     "collateral_per_100": 0.0,
+     "orders_with_collateral": 0.0,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.04,
+     "abort_rate": 0.08,
+     "handoff_rate": 1.0,
+     "robot_s_per_order": 0.5519999999999657,
+     "uph": 0.0,
+     "cost_per_order": 9.377999999999991
+    }
+   },
+   "learned-open": {
+    "unobstructed": {
+     "orders": 142,
+     "pick_rate": 0.1267605633802817,
+     "attempt_rate": 0.14788732394366197,
+     "success_when_attempted": 0.8571428571428571,
+     "collateral_per_100": 2.112676056338028,
+     "orders_with_collateral": 0.02112676056338028,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.0,
+     "handoff_rate": 0.8732394366197183,
+     "robot_s_per_order": 0.4753521126760367,
+     "uph": 591.7808219178232,
+     "cost_per_order": 9.562499999999995
+    },
+    "below_others": {
+     "orders": 83,
+     "pick_rate": 0.03614457831325301,
+     "attempt_rate": 0.03614457831325301,
+     "success_when_attempted": 1.0,
+     "collateral_per_100": 0.0,
+     "orders_with_collateral": 0.0,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.0,
+     "handoff_rate": 0.963855421686747,
+     "robot_s_per_order": 0.10240963855421359,
+     "uph": 744.8275862069105,
+     "cost_per_order": 8.700301204819278
+    },
+    "blocked": {
+     "orders": 25,
+     "pick_rate": 0.0,
+     "attempt_rate": 0.0,
+     "success_when_attempted": null,
+     "collateral_per_100": 0.0,
+     "orders_with_collateral": 0.0,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.0,
+     "handoff_rate": 1.0,
+     "robot_s_per_order": 0.0,
+     "uph": 0.0,
+     "cost_per_order": 9.0
+    }
+   },
+   "learned-closed": {
+    "unobstructed": {
+     "orders": 142,
+     "pick_rate": 0.11267605633802817,
+     "attempt_rate": 0.14788732394366197,
+     "success_when_attempted": 0.7619047619047619,
+     "collateral_per_100": 1.4084507042253522,
+     "orders_with_collateral": 0.014084507042253521,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.014084507042253521,
+     "handoff_rate": 0.8873239436619719,
+     "robot_s_per_order": 0.4887323943661761,
+     "uph": 517.0556552962437,
+     "cost_per_order": 9.206690140845065
+    },
+    "below_others": {
+     "orders": 83,
+     "pick_rate": 0.024096385542168676,
+     "attempt_rate": 0.03614457831325301,
+     "success_when_attempted": 0.6666666666666666,
+     "collateral_per_100": 0.0,
+     "orders_with_collateral": 0.0,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.012048192771084338,
+     "handoff_rate": 0.9759036144578314,
+     "robot_s_per_order": 0.11024096385541755,
+     "uph": 475.24752475248596,
+     "cost_per_order": 8.846837349397589
+    },
+    "blocked": {
+     "orders": 25,
+     "pick_rate": 0.0,
+     "attempt_rate": 0.0,
+     "success_when_attempted": null,
+     "collateral_per_100": 0.0,
+     "orders_with_collateral": 0.0,
+     "drop_rate": 0.0,
+     "wrong_item_rate": 0.0,
+     "abort_rate": 0.0,
+     "handoff_rate": 1.0,
+     "robot_s_per_order": 0.0,
+     "uph": 0.0,
+     "cost_per_order": 9.0
+    }
+   }
+  },
+  "vs_heuristic_open": {
+   "heuristic-closed": {
+    "picked": {
+     "diff": -0.012,
+     "lo": -0.028,
+     "hi": 0.0,
+     "n": 250
+    },
+    "collateral": {
+     "diff": -0.008,
+     "lo": -0.02,
+     "hi": 0.0,
+     "n": 250
+    },
+    "dropped": {
+     "diff": -0.004,
+     "lo": -0.012,
+     "hi": 0.0,
+     "n": 250
+    },
+    "cost": {
+     "diff": 0.08004999999999743,
+     "lo": -1.091465000000003,
+     "hi": 0.8735074999999977,
+     "n": 250
+    }
+   },
+   "learned-open": {
+    "picked": {
+     "diff": -0.02,
+     "lo": -0.052,
+     "hi": 0.016,
+     "n": 250
+    },
+    "collateral": {
+     "diff": -0.016,
+     "lo": -0.04,
+     "hi": 0.004,
+     "n": 250
+    },
+    "dropped": {
+     "diff": -0.012,
+     "lo": -0.028,
+     "hi": 0.0,
+     "n": 250
+    },
+    "cost": {
+     "diff": -1.8922499999999804,
+     "lo": -4.270617499999977,
+     "hi": -0.010623749999979306,
+     "n": 250
+    }
+   },
+   "learned-closed": {
+    "picked": {
+     "diff": -0.032,
+     "lo": -0.068,
+     "hi": 0.004,
+     "n": 250
+    },
+    "collateral": {
+     "diff": -0.02,
+     "lo": -0.044,
+     "hi": 0.0,
+     "n": 250
+    },
+    "dropped": {
+     "diff": -0.012,
+     "lo": -0.028,
+     "hi": 0.0,
+     "n": 250
+    },
+    "cost": {
+     "diff": -2.045699999999981,
+     "lo": -4.493624999999979,
+     "hi": -0.07155999999998557,
+     "n": 250
+    }
+   }
+  },
+  "monitor_effect_learned": {
+   "picked": {
+    "diff": -0.012,
+    "lo": -0.028,
+    "hi": 0.0,
+    "n": 250
+   },
+   "collateral": {
+    "diff": -0.004,
+    "lo": -0.012,
+    "hi": 0.0,
+    "n": 250
+   },
+   "dropped": {
+    "diff": 0.0,
+    "lo": 0.0,
+    "hi": 0.0,
+    "n": 250
+   },
+   "cost": {
+    "diff": -0.15345000000000034,
+    "lo": -0.7058000000000003,
+    "hi": 0.19519999999999965,
+    "n": 250
+   }
+  },
+  "monitor_effect_heuristic": {
+   "picked": {
+    "diff": -0.012,
+    "lo": -0.028,
+    "hi": 0.0,
+    "n": 250
+   },
+   "collateral": {
+    "diff": -0.008,
+    "lo": -0.02,
+    "hi": 0.0,
+    "n": 250
+   },
+   "dropped": {
+    "diff": -0.004,
+    "lo": -0.012,
+    "hi": 0.0,
+    "n": 250
+   },
+   "cost": {
+    "diff": 0.08004999999999743,
+    "lo": -1.091465000000003,
+    "hi": 0.8735074999999977,
+    "n": 250
+   }
+  },
+  "learned_promises": {
+   "attempts": 24,
+   "predicted_success": 0.6731666666666666,
+   "observed_success": 0.875,
+   "predicted_collateral": 0.03125,
+   "observed_collateral": 0.125
+  },
+  "occlusion_accuracy": 0.748
+ }
+}

@@ -222,7 +222,9 @@ def markdown(r: dict[str, Any]) -> str:
             parts.append(
                 f"{pol}: {v['sealed_attempts']} sealed attempts, {v['collateral_attempts']} with a neighbour out.\n\n"
                 "| Neighbour pixels | Collateral stopped | Clean picks stopped | Saving per attempt (s) |\n|---:|---:|---:|---:|\n"
-                + "\n".join(f"| {x['abort_px']} | {_pct(x['collateral_stopped'])} | {_pct(x['clean_stopped'])} | {x['saving_s_per_attempt']:+.2f} |" for x in v["table"])
+                + "\n".join(
+                    f"| {x['abort_px']} | {_pct(x['collateral_stopped'])} | {_pct(x['clean_stopped'])} | {x['saving_s_per_attempt']:+.2f} |" for x in v["table"]
+                )
                 + f"\n\nRecommended {v['recommended_abort_px']}, configured {v['configured_abort_px']}.\n"
             )
     for fam in ("dense", "soft"):
