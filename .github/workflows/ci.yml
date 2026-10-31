@@ -58,7 +58,10 @@ jobs:
       - run: |
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install -e ".[train,service,dev]"
-      - run: pytest -m slow
+      - name: Quick pipeline (the slow test)
+        run: |
+          set -o pipefail
+          pytest -m slow -x 2>&1 | tee slow.log || { echo "::error title=slow test::$(grep -E 'Error|assert|FAIL' slow.log | tail -8 | tr '\n' ' ' | cut -c1-900)"; exit 1; }
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: quick-run, path: 'runs/quick/*.json' }
@@ -88,7 +91,8 @@ jobs:
           pip install -e ".[service]"
           kubectl -n podpick port-forward svc/planner 8080:80 > pf.log 2>&1 &
           for i in $(seq 1 30); do curl -sf localhost:8080/readyz && break; sleep 1; done
-          python scripts/smoke.py http://localhost:8080
+          set -o pipefail
+          python scripts/smoke.py http://localhost:8080 2>&1 | tee smoke.log || { echo "::error title=smoke::$(tail -12 smoke.log | tr '\n' ' ' | cut -c1-900)"; exit 1; }
       - name: Diagnostics
         if: failure()
         run: |

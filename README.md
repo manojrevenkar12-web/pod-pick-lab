@@ -60,9 +60,9 @@ same start state, with the same sensor noise; differences are paired, with 95% b
   gave the same AUC as training from scratch at 600, 2,400 and 6,948 labelled attempts (success AUC
   0.91, collateral AUC 0.78–0.80 at the full budget). The finding Amazon reported for multi-suction
   picking does not carry over to this simulator and this model size.
-- **The C++ monitor equals its Python reference** on all 545 frames of real extractions (signal and
-  action), at a median of 125 µs per 64 × 48 frame through the Python binding (305 µs p99) against
-  318 µs for the reference. At 10 Hz that is about 0.1% of the tick.
+- **The C++ monitor equals its Python reference** on all 821 frames of real extractions (120 orders)
+  (signal and action), at a median of 146 µs per 64 × 48 frame through the Python binding (335 µs
+  p99) against 373 µs for the reference. At 10 Hz that is about 0.15% of the tick.
 
 ### What is weak
 

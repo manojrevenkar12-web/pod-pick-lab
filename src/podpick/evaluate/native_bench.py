@@ -37,17 +37,32 @@ class _Both:
         return a1, s1
 
 
-def bench(models_dir: str, n_orders: int = 40, family: str = "mixed") -> dict[str, Any]:
+def bench(models_dir: str, n_orders: int = 40, family: str = "mixed", min_frames: int = 100) -> dict[str, Any]:
+    """Attempt the first candidate of each order (no eligibility check, so every seal is extracted)
+    until at least `min_frames` monitor frames were compared, or `4 * n_orders` orders were tried."""
+    from ..decide.planner import Option
+    from ..grasp.candidates import generate
+
     _Both.log = []
     orig = cell_mod.Monitor
     cell_mod.Monitor = _Both  # type: ignore[assignment,misc]
     try:
         c = cell_mod.load_cell("heuristic-closed", Path(models_dir))
-        for s in family_seeds(family + "-native", n_orders):
+        tried = 0
+        for s in family_seeds(family + "-native", 4 * n_orders):
+            if tried >= n_orders and len(_Both.log) >= min_frames:
+                break
             w = World(sample_scene(family, s))
             if pick_order(w, np.random.default_rng(s)) is None:
                 continue
-            c.pick(w)
+            tried += 1
+            obs = w.observe()
+            perc = c.perception(obs)
+            cands = generate(obs, perc["mask"], perc["occlusion"])
+            if len(cands) == 0:
+                continue
+            w.open_band()
+            c.attempt(w, cands, Option(0, "lift", float("nan")), perc["mask"])
     finally:
         cell_mod.Monitor = orig  # type: ignore[misc]
     log = np.array(_Both.log, dtype=float)
@@ -55,6 +70,7 @@ def bench(models_dir: str, n_orders: int = 40, family: str = "mixed") -> dict[st
         return {"frames": 0}
     return {
         "frames": int(len(log)),
+        "orders": tried,
         "signal_equal": float(np.mean(log[:, 1] == log[:, 3])),
         "action_equal": float(np.mean(log[:, 0] == log[:, 2])),
         "python_us_median": float(np.median(log[:, 4]) * 1e6),

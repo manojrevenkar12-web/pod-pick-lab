@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-31T12:06:49+0100",
+ "generated_at": "2026-10-31T12:18:29+0100",
  "profile": "full",
  "perception": {
   "mask_iou_mean": 0.6862344467168959,
@@ -369,12 +369,13 @@
   }
  },
  "native": {
-  "frames": 545,
+  "frames": 821,
+  "orders": 120,
   "signal_equal": 1.0,
   "action_equal": 1.0,
-  "python_us_median": 318.30199986870866,
-  "native_us_median": 125.05000086093787,
-  "native_us_p99": 304.73716011329043
+  "python_us_median": 373.43899930419866,
+  "native_us_median": 145.60400086338632,
+  "native_us_p99": 335.1229992404109
  },
  "monitor_tuning": {
   "source": "validation orders (picks_val), passive monitor",
@@ -2239,7 +2240,7 @@
     "path": "native.native_us_median",
     "op": "<=",
     "value": 1000,
-    "actual": 125.05000086093787,
+    "actual": 145.60400086338632,
     "ok": true
    },
    {
