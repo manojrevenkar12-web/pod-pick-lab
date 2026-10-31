@@ -88,7 +88,7 @@ jobs:
       - name: Plans from the cluster equal plans made locally
         run: |
           pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -e ".[service]"
+          pip install -e ".[service]" httpx
           kubectl -n podpick port-forward svc/planner 8080:80 > pf.log 2>&1 &
           for i in $(seq 1 30); do curl -sf localhost:8080/readyz && break; sleep 1; done
           set -o pipefail
